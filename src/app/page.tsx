@@ -12,8 +12,7 @@ export default function AdminLogin() {
     e.preventDefault();
     setLoading(true);
     try {
-      const result = await axios.post('/api/admin/login', {email, password});
-      console.log('Login result:', result.data);
+      const result = await axios.post('/api/admin/login', {email, password},   { withCredentials: true } );
       if(result.status === 200){
         router.push("/admin/users");
       }
