@@ -55,3 +55,45 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ ok: false, message: err.message }, { status: 500 });
   }
 }
+export async function PATCH(req: NextRequest){
+    const { email } = await req.json();
+    if (!email) {
+        return NextResponse.json({ ok: false, message: "Missing email"}, { status: 400 });
+    }
+    try {
+      const { data: existingUser } = await supabaseAdmin
+      .from("program_users")
+      .select("*")
+      .eq("email", email)
+      .limit(1)
+      .single();
+      if(existingUser.enabled){
+        const { data, error } = await supabaseAdmin
+        .from("program_users")
+        .update({
+            enabled:false
+        })
+        .eq("id", existingUser.id); // เงื่อนไข (เช่น อัพเดตเฉพาะ user id นี้)
+        if(error){
+            console.log(error)
+        }else{
+            return NextResponse.json({ok:true , message:`success`} , {status:200})
+        }
+      }else{
+        const { data, error } = await supabaseAdmin
+        .from("program_users")
+        .update({
+            enabled:true
+        })
+        .eq("id", existingUser.id); // เงื่อนไข (เช่น อัพเดตเฉพาะ user id นี้)
+        if(error){
+            console.log(error)
+        }else{
+            return NextResponse.json({ok:true , message:"success"} , {status:200})
+        }
+      }
+      
+    }catch(err : any){
+        return NextResponse.json({ ok: false, message: err.message }, { status: 500 });
+    }
+}

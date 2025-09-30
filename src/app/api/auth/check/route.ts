@@ -21,7 +21,9 @@ export async function POST(req: NextRequest) {
     // ตรวจสอบ password กับ hash
     const isValid = await bcrypt.compare(password, data.password_hash);
     if (!isValid) return NextResponse.json({ ok: false, message: "Invalid password" }, { status: 401 });
-
+    if(!data.enabled){
+        return NextResponse.json({ok:false , message:"YOUR ACCOUNT HAS DISABLE"})
+    }
     // สร้าง token ตัวอย่างง่าย ๆ
     const token = Buffer.from(`${data.id}:${data.email}`).toString("base64");
 
