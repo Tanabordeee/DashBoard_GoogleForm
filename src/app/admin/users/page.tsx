@@ -15,8 +15,8 @@ export default function Dashboard() {
   useEffect(() => {
     const fetchUsers = async () => {
       try {
-        const res = await axios.get<User[]>("/api/admin/users");
-        setUsers(res.data);
+        const res = await axios.get<{ok: boolean, users: User[]}>("/api/admin/users");
+        setUsers(res.data.users);
       } catch (error) {
         console.error(error);
       } finally {
