@@ -43,6 +43,7 @@ export default function Dashboard() {
     setLoadingUser(user_email);
     try {
       await axios.patch("/api/admin/users", { email: user_email });
+      fetchUsers()
     } catch(err) {
       console.log(err);
     } finally {
@@ -53,6 +54,7 @@ export default function Dashboard() {
   return (
     <div className="flex w-full justify-center items-center min-h-screen">
     <div className="flex flex-col w-full justify-center items-center">
+      
       <h3 className="text-xl">Users</h3>
       <ul className="w-full gap-5 flex flex-col">
         {users.map(user => (
@@ -69,6 +71,7 @@ export default function Dashboard() {
               >
                 Enabled
               </Button>
+              
             ) : (
               <Button
                 className="bg-red-500 hover:bg-red-600 text-white cursor-pointer"
