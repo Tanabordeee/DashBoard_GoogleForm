@@ -4,7 +4,7 @@ import bcrypt from "bcryptjs";
 export async function GET(req: NextRequest) {
     const { data, error } = await supabaseAdmin
       .from("program_users")
-      .select("id, username, enabled, created_at")
+      .select("id, email, enabled, created_at")
       .order("created_at", { ascending: true });
   
     if (error) {
