@@ -2,6 +2,8 @@
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import axios from "axios";
+import { Input } from "@/components/ui/input"
+import { Button } from "@/components/ui/button"
 export default function AdminLogin() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -24,23 +26,33 @@ export default function AdminLogin() {
     }
   };
   return (
-    <form onSubmit={submit}>
-      <input
-        value={email}
-        onChange={e => setEmail(e.target.value)}
-        placeholder="admin email"
-        required
-      />
-      <input
-        type="password"
-        value={password}
-        onChange={e => setPassword(e.target.value)}
-        placeholder="password"
-        required
-      />
-      <button type="submit" disabled={loading}>
-        {loading ? "Signing in..." : "Sign in"}
-      </button>
-    </form>
+    <div className="flex justify-center items-center h-screen">
+
+  <form
+    onSubmit={submit}
+    className="flex flex-col p-8  gap-5 w-[30%] shadow-md rounded-xl">
+    <h1>LOGIN</h1>
+    <Input
+      className="w-full p-5"
+      value={email}
+      onChange={(e) => setEmail(e.target.value)}
+      placeholder="admin email"
+      required
+    />
+    <Input
+      className="w-full p-5"
+      type="password"
+      value={password}
+      onChange={(e) => setPassword(e.target.value)}
+      placeholder="password"
+      required
+    />
+    <Button type="submit" disabled={loading}>
+      {loading ? "Signing in..." : "Sign in"}
+    </Button>
+  </form>
+</div>
+
+
   );
 }

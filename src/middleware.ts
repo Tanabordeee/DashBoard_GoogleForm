@@ -4,8 +4,8 @@ import { NextResponse } from "next/server";
 export async function middleware(req: any) {
     try {
       const pathname = req.nextUrl.pathname;
-      
-      if (pathname.startsWith("/api/admin/users") || pathname.startsWith("/admin/users")) {
+      const method = req.method;
+      if (pathname.startsWith("/api/admin/users") || pathname.startsWith("/admin/users") || (pathname === "/api/auth/check" && method == "GET")) {
         const token = req.cookies.get("token");
         
         if (!token) {
